@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>dispositivo.py</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <style type="text/css">
+        .s0 { color: #cf8e6d; }
+        .s1 { color: #bcbec4; }
+        .s2 { color: #bcbec4; }
+        .s3 { color: #6aab73; }
+    </style>
+</head>
+<body bgcolor="#1e1f22">
+    <table cellspacing="0" cellpadding="5" cols="1" width="100%" bgcolor="#606060">
+        <tr>
+            <td>
+                <center>
+                    <font face="Arial, Helvetica" color="#000000">dispositivo.py</font>
+                </center>
+            </td>
+        </tr>
+    </table>
+    <pre>
+<span class="s0">from </span><span class="s1">fastapi </span><span class="s0">import </span><span class="s1">APIRouter</span>
+<span class="s0">from </span><span class="s1">models</span><span class="s2">.</span><span class="s1">dependencia</span>
+<span class="s0">from </span><span class="s1">models</span><span class="s2">.</span><span class="s1">dispositivo</span>
+<span class="s0">from </span><span class="s1">models</span><span class="s2">.</span><span class="s1">unidade_consumidora</span>
+<span class="s0">from </span><span class="s1">schemas</span><span class="s2">.</span><span class="s1">dispositivos</span>
+<span class="s1">    DispositivoCreate,</span>
+<span class="s1">    DispositivoRead,</span>
+<span class="s1">    DispositivoReadList,</span>
+<span class="s1">    DispositivoUpdate</span>
+<span class="s2">)</span>
+
+<span class="s1">router </span><span class="s2">= </span><span class="s1">APIRouter</span>
+
+<span class="s2">@router.post</span>
+<span class="s0">def </span><span class="s1">criar_dispositivo</span><span class="s2">(</span><span class="s1">dispositivo: </span><span class="s1">DispositivoCreate</span><span class="s2">)</span>:
+<span class="s1">    dispositivo.nome = dispositivo.nome</span>
+<span class="s1">    dispositivo.consumo = dispositivo.consumo</span>
+<span class="s1">    dispositivo.uso_diario = dispositivo.uso_diario</span>
+<span class="s1">    dispositivo.tipo_id = dispositivo.tipo_id</span>
+<span class="s1">    dispositivo.save()</span>
+<span class="s0">    return </span><span class="s1">dispositivo</span>
+
+<span class="s2">@router.get</span>
+<span class="s1">path</span><span class="s2">=</span><span class="s3">'/unidades-consumidoras/{unidade_consumidora_id}'</span>
+<span class="s1">response_model</span><span class="s2">=</span><span class="s1">DispositivoReadList</span>
+<span class="s2">)</span>
+<span class="s0">def </span><span class="s1">listar_dispositivos</span><span class="s2">(</span><span class="s1">unidade_consumidora_id: </span><span class="s1">int</span><span class="s2">)</span>:
+<span class="s1">    dispositivos = DispositivoDB.find(unidade_consumidora_id)</span>
+<span class="s0">    return </span><span class="s2">{</span><span class="s3">'dispositivos'</span><span class="s2">: dispositivos</span><span class="s2">}</span>
+
+<span class="s2">@router.get</span>
+<span class="s1">path</span><span class="s2">=</span><span class="s3">'/dependencias/{dependencia_id}'</span>
+<span class="s2">)</span>
+<span class="s0">def </span><span class="s1">listar_dispositivos_por_dependencia</span><span class="s2">(</span><span class="s1">dependencia_id: </span><span class="s1">int</span><span class="s2">)</span>:
+<span class="s1">    dispositivos = DispositivoDB.find_by_dependencia(dependencia_id)</span>
+<span class="s0">    return </span><span class="s2">{</span><span class="s3">'dispositivos'</span><span class="s2">: dispositivos</span><span class="s2">}</span>
+
+<span class="s2">@router.get</span>
+<span class="s1">path</span><span class="s2">=</span><span class="s3">'/dispositivos/{dispositivo_id}'</span>
+<span class="s2">)</span>
+<span class="s0">def </span><span class="s1">listar_dispositivo</span><span class="s2">(</span><span class="s1">dispositivo_id: </span><span class="s1">int</span><span class="s2">)</span>:
+<span class="s1">    dispositivo = DispositivoDB.find(dispositivo_id)</span>
+<span class="s0">    return </span><span class="s1">dispositivo</span>
+
+<span class="s2">@router.patch</span>
+<span class="s0">def </span><span class="s1">atualizar_dispositivo</span><span class="s2">(</span><span class="s1">id_dispositivo: </span><span class="s1">int</span><span class="s2">,</span><span class="s1"> dados: </span><span class="s1">DispositivoUpdate</span><span class="s2">)</span>:
+<span class="s1">    dispositivo = DispositivoDB.update(id_dispositivo, dados)</span>
+<span class="s0">    return </span><span class="s1">dispositivo</span>
+
+<span class="s2">@router.delete</span>
+<span class="s0">def </span><span class="s1">eliminar_dispositivo</span><span class="s2">(</span><span class="s1">id_dispositivo: </span><span class="s1">int</span><span class="s2">)</span>:
+<span class="s1">    dispositivo = DispositivoDB.find(id_dispositivo)</span>
+<span class="s1">    dispositivo.delete_instance()</span>
+<span class="s0">    return </span><span class="s1">dispositivo</span>
+    </pre>
+</body>
+</html>

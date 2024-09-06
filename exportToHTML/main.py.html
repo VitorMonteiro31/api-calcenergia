@@ -1,0 +1,55 @@
+<html>
+<head>
+<title>main.py</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.s0 { color: #cf8e6d;}
+.s1 { color: #bcbec4;}
+.s2 { color: #bcbec4;}
+.s3 { color: #6aab73;}
+</style>
+</head>
+<body bgcolor="#1e1f22">
+<table CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#606060" >
+<tr><td><center>
+<font face="Arial, Helvetica" color="#000000">
+main.py</font>
+</center></td></tr></table>
+<pre><span class="s0">from </span><span class="s1">fastapi </span><span class="s0">import </span><span class="s1">FastAPI</span>
+<span class="s0">from </span><span class="s1">fastapi</span><span class="s2">.</span><span class="s1">middleware</span><span class="s2">.</span><span class="s1">cors </span><span class="s0">import </span><span class="s1">CORSMiddleware</span>
+
+<span class="s0">from </span><span class="s1">config</span><span class="s2">.</span><span class="s1">database </span><span class="s0">import </span><span class="s1">shutdown_db</span><span class="s2">, </span><span class="s1">startup_db</span>
+<span class="s0">from </span><span class="s1">routers</span><span class="s2">.</span><span class="s1">bandeira </span><span class="s0">import </span><span class="s1">router </span><span class="s0">as </span><span class="s1">bandeira_router</span>
+<span class="s0">from </span><span class="s1">routers</span><span class="s2">.</span><span class="s1">dependencia </span><span class="s0">import </span><span class="s1">router </span><span class="s0">as </span><span class="s1">comodo_router</span>
+<span class="s0">from </span><span class="s1">routers</span><span class="s2">.</span><span class="s1">dispositivo </span><span class="s0">import </span><span class="s1">router </span><span class="s0">as </span><span class="s1">dispositivos_router</span>
+<span class="s0">from </span><span class="s1">routers</span><span class="s2">.</span><span class="s1">tipo_consumidor </span><span class="s0">import </span><span class="s1">router </span><span class="s0">as </span><span class="s1">tipo_router</span>
+<span class="s0">from </span><span class="s1">routers</span><span class="s2">.</span><span class="s1">tipo_dispositivo </span><span class="s0">import </span><span class="s1">router </span><span class="s0">as </span><span class="s1">tipo_dispositivos_router</span>
+<span class="s0">from </span><span class="s1">routers</span><span class="s2">.</span><span class="s1">unidade_consumidora </span><span class="s0">import </span><span class="s1">router </span><span class="s0">as </span><span class="s1">consumidor_router</span>
+
+<span class="s1">app </span><span class="s2">= </span><span class="s1">FastAPI</span><span class="s2">(</span><span class="s1">title</span><span class="s2">=</span><span class="s3">'CALCULADORA DE CONSUMO DE ENERGIA ELÉTRICA'</span><span class="s2">)</span>
+
+
+<span class="s2">@</span><span class="s1">app</span><span class="s2">.</span><span class="s1">get</span><span class="s2">(</span><span class="s3">&quot;/&quot;</span><span class="s2">)</span>
+<span class="s0">def </span><span class="s1">read_root</span><span class="s2">():</span>
+    <span class="s0">return </span><span class="s2">{</span><span class="s3">&quot;message&quot;</span><span class="s2">: </span><span class="s3">&quot;API Suprema Conectada!&quot;</span><span class="s2">}</span>
+
+
+<span class="s1">app</span><span class="s2">.</span><span class="s1">add_event_handler</span><span class="s2">(</span><span class="s3">&quot;startup&quot;</span><span class="s2">, </span><span class="s1">func</span><span class="s2">=</span><span class="s1">startup_db</span><span class="s2">)</span>
+<span class="s1">app</span><span class="s2">.</span><span class="s1">add_event_handler</span><span class="s2">(</span><span class="s3">&quot;shutdown&quot;</span><span class="s2">, </span><span class="s1">func</span><span class="s2">=</span><span class="s1">shutdown_db</span><span class="s2">)</span>
+
+<span class="s1">app</span><span class="s2">.</span><span class="s1">add_middleware</span><span class="s2">(</span>
+    <span class="s1">CORSMiddleware</span><span class="s2">,</span>
+    <span class="s1">allow_origins</span><span class="s2">=[</span><span class="s3">&quot;*&quot;</span><span class="s2">],</span>
+    <span class="s1">allow_credentials</span><span class="s2">=</span><span class="s0">True</span><span class="s2">,</span>
+    <span class="s1">allow_methods</span><span class="s2">=[</span><span class="s3">&quot;*&quot;</span><span class="s2">],</span>
+    <span class="s1">allow_headers</span><span class="s2">=[</span><span class="s3">&quot;*&quot;</span><span class="s2">],</span>
+<span class="s2">)</span>
+<span class="s1">app</span><span class="s2">.</span><span class="s1">include_router</span><span class="s2">(</span><span class="s1">tipo_router</span><span class="s2">)</span>
+<span class="s1">app</span><span class="s2">.</span><span class="s1">include_router</span><span class="s2">(</span><span class="s1">consumidor_router</span><span class="s2">)</span>
+<span class="s1">app</span><span class="s2">.</span><span class="s1">include_router</span><span class="s2">(</span><span class="s1">comodo_router</span><span class="s2">)</span>
+<span class="s1">app</span><span class="s2">.</span><span class="s1">include_router</span><span class="s2">(</span><span class="s1">tipo_dispositivos_router</span><span class="s2">)</span>
+<span class="s1">app</span><span class="s2">.</span><span class="s1">include_router</span><span class="s2">(</span><span class="s1">dispositivos_router</span><span class="s2">)</span>
+<span class="s1">app</span><span class="s2">.</span><span class="s1">include_router</span><span class="s2">(</span><span class="s1">bandeira_router</span><span class="s2">)</span>
+</pre>
+</body>
+</html>

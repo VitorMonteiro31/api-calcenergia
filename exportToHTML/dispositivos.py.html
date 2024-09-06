@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>dispositivos.py</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <style type="text/css">
+        .s0 { color: #cf8e6d; }
+        .s1 { color: #bcbec4; }
+        .s2 { color: #bcbec4; }
+        .s3 { color: #2aacb8; }
+    </style>
+</head>
+<body bgcolor="#1e1f22">
+    <table cellspacing="0" cellpadding="5" cols="1" width="100%" bgcolor="#606060">
+        <tr>
+            <td>
+                <center>
+                    <font face="Arial, Helvetica" color="#000000">dispositivos.py</font>
+                </center>
+            </td>
+        </tr>
+    </table>
+    <pre>
+<span class="s0">from </span><span class="s1">pydantic </span><span class="s0">import </span><span class="s1">BaseModel</span>
+
+<span class="s0">class </span><span class="s1">DispositivoCreate</span><span class="s2">(</span><span class="s1">BaseModel</span><span class="s2">):</span>
+    <span class="s1">unidade_consumidora_id</span><span class="s2">: </span><span class="s1">int</span>
+    <span class="s1">dependencia_id</span><span class="s2">: </span><span class="s1">int</span>
+    <span class="s1">tipo_id</span><span class="s2">: </span><span class="s1">int</span>
+    <span class="s1">nome</span><span class="s2">: </span><span class="s1">str</span>
+    <span class="s1">consumo</span><span class="s2">: </span><span class="s1">float</span>
+    <span class="s1">uso_diario</span><span class="s2">: </span><span class="s1">float</span>
+
+<span class="s0">class </span><span class="s1">DispositivoUpdate</span><span class="s2">(</span><span class="s1">BaseModel</span><span class="s2">):</span>
+    <span class="s1">nome</span><span class="s2">: </span><span class="s1">str</span>
+    <span class="s1">consumo</span><span class="s2">: </span><span class="s1">int</span>
+    <span class="s1">uso_diario</span><span class="s2">: </span><span class="s1">int</span>
+    <span class="s1">tipo_id</span><span class="s2">: </span><span class="s1">int</span>
+
+<span class="s0">class </span><span class="s1">DispositivoRead</span><span class="s2">(</span><span class="s1">BaseModel</span><span class="s2">):</span>
+    <span class="s1">id</span><span class="s2">: </span><span class="s1">int</span>
+    <span class="s1">unidade_consumidora_id</span><span class="s2">: </span><span class="s1">int</span>
+    <span class="s1">dependencia_id</span><span class="s2">: </span><span class="s1">int</span>
+    <span class="s1">tipo_id</span><span class="s2">: </span><span class="s1">int</span>
+    <span class="s1">nome</span><span class="s2">: </span><span class="s1">str</span>
+    <span class="s1">consumo</span><span class="s2">: </span><span class="s1">float</span>
+    <span class="s1">uso_diario</span><span class="s2">: </span><span class="s1">float</span>
+
+<span class="s0">class </span><span class="s1">DispositivoReadMany</span><span class="s2">(</span><span class="s1">BaseModel</span><span class="s2">):</span>
+    <span class="s1">id</span><span class="s2">: </span><span class="s1">int</span>
+    <span class="s1">nome</span><span class="s2">: </span><span class="s1">str</span>
+    <span class="s1">tipo_id</span><span class="s2">: </span><span class="s1">int</span>
+
+<span class="s0">class </span><span class="s1">DispositivoReadList</span><span class="s2">(</span><span class="s1">BaseModel</span><span class="s2">):</span>
+    <span class="s1">dispositivos</span><span class="s2">: </span><span class="s1">list</span><span class="s2">[</span><span class="s1">DispositivoRead</span><span class="s2">]</span>
+    </pre>
+</body>
+</html>
